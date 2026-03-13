@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:map"))
     implementation(project(":core:media"))
+    implementation(project(":core:sync"))
 
     // AndroidX
     implementation("androidx.core:core-ktx:1.12.0")
