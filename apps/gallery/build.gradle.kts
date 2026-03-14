@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.jimknopf.contacts"
+    namespace = "com.jimknopf.gallery"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.jimknopf.contacts"
+        applicationId = "com.jimknopf.gallery"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -46,26 +46,22 @@ android {
         viewBinding = true
     }
 
-    // Each app is independent - can be built/released separately
     applicationVariants.all {
         val variant = this
         variant.outputs
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
-                val appName = "contacts"
                 val version = variant.versionName
-                output.outputFileName = "contacts-$version.apk"
+                output.outputFileName = "gallery-$version.apk"
             }
     }
 }
 
 dependencies {
-    // Core modules (shared libraries)
-    implementation(project(":core:database"))
-    implementation(project(":core:map"))
-    implementation(project(":core:media"))
-    implementation(project(":core:sync"))
+    // Shared contracts for cross-app communication
     implementation(project(":core:contracts"))
+    implementation(project(":core:database"))
+    implementation(project(":core:media"))
 
     // AndroidX
     implementation("androidx.core:core-ktx:1.12.0")
@@ -74,8 +70,14 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    
+    // RecyclerView for photo grid
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    
+    // Image loading
+    implementation("io.coil-kt:coil:2.5.0")
 
-    // Room Database
+    // Room for local storage
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
