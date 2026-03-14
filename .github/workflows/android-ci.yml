@@ -23,28 +23,21 @@ jobs:
         with:
           gradle-version: 8.7
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Generate Gradle Wrapper
+        run: |
+          if [ ! -f gradlew ]; then
+            gradle wrapper --gradle-version 8.7
+          fi
 
-      - name: Build Debug APK
-        run: ./gradlew :apps:contacts:assembleDebug
-
-      - name: Build Release APK
+      - name: Build Contacts App
         run: ./gradlew :apps:contacts:assembleRelease
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/feat/'))
-        with:
-          name: contacts-debug-apk
-          path: apps/contacts/build/outputs/apk/debug/contacts-*-debug.apk
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/feat/'))
         with:
           name: contacts-release-apk
-          path: apps/contacts/build/outputs/apk/release/contacts-*.apk
+          path: apps/contacts/build/outputs/apk/release/*.apk
 
   release:
     needs: build
