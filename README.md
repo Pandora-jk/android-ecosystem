@@ -1,71 +1,81 @@
-# Android Ecosystem - Modular Monorepo
+# Android Contacts App
 
-A modular Android repository structure for building multiple independent apps with shared core libraries.
+Signed Android Contacts APK releases with Material You support and Obtainium-compatible GitHub Releases.
 
-## Structure
+## Install
 
-```
-android-ecosystem/
-├── apps/                 # Independent apps
-│   └── contacts/        # Contacts app (first release)
-│
-├── core/                # Shared libraries
-│   ├── database/       # Room DB, used by ALL apps
-│   ├── map/           # Map visualization
-│   ├── media/         # Photo/media handling
-│   └── sync/          # Sync engine
-│
-└── docs/               # Architecture documentation
+### Obtainium
+
+Use this repository URL in Obtainium:
+
+```text
+https://github.com/Pandora-jk/android-ecosystem
 ```
 
-## Build Commands
+Recommended settings for the stable alpha channel from `master`:
 
-### Build Contacts App (Debug)
+- Source: `GitHub`
+- Include prereleases: `On`
+- Asset filter: `^contacts-alpha-[0-9.]+\.apk$`
+
+Optional test channel for `feat/contacts-alpha`:
+
+- Source: `GitHub`
+- Include prereleases: `On`
+- Asset filter: `^contacts-alpha-[0-9.]+-test-contacts-alpha\.[0-9]{2}\.apk$`
+
+## Releases
+
+- Releases page: `https://github.com/Pandora-jk/android-ecosystem/releases`
+- Package name: `com.jimknopf.contacts`
+- Delivery: signed APKs attached to GitHub prereleases
+
+## App
+
+Current focus is the Contacts app in `apps/contacts`.
+
+Features:
+
+- Material You styling
+- Contact CRUD
+- Favorites and groups
+- Search
+- GitHub Release delivery for direct install and updates
+
+## Build
+
+Requirements:
+
+- Java 17
+- Android SDK
+
+Build debug:
+
 ```bash
 ./gradlew :apps:contacts:assembleDebug
 ```
 
-### Build Contacts App (Release)
+Build release:
+
 ```bash
 ./gradlew :apps:contacts:assembleRelease
 ```
 
-### Build All Apps
-```bash
-./gradlew assembleRelease
+## Repo Layout
+
+```text
+android-ecosystem/
+├── apps/
+│   └── contacts/
+├── core/
+│   ├── contracts/
+│   ├── database/
+│   ├── map/
+│   ├── media/
+│   └── sync/
+└── docs/
 ```
-
-### Install on Device
-```bash
-./gradlew :apps:contacts:installDebug
-```
-
-## Release Workflow
-
-Each app is versioned independently:
-
-1. Update version in `apps/contacts/build.gradle.kts`:
-   ```kotlin
-   versionCode = 1
-   versionName = "1.0.0"
-   ```
-
-2. Build release APK:
-   ```bash
-   ./gradlew :apps:contacts:assembleRelease
-   ```
-
-3. APK output: `apps/contacts/build/outputs/apk/release/contacts-1.0.0.apk`
-
-4. Tag release: `git tag contacts-v1.0.0`
-
-## Adding New Apps
-
-1. Create `apps/<appname>/` directory
-2. Add `build.gradle.kts` with unique `applicationId`
-3. Add to `settings.gradle.kts`: `include(":apps:<appname>")`
-4. Build: `./gradlew :apps:<appname>:assembleRelease`
 
 ## License
 
-MIT - Jim Knopf
+MIT
