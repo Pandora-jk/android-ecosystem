@@ -6,7 +6,7 @@
 -keep class com.jimknopf.contacts.data.model.** { *; }
 
 # Keep Kotlin metadata
--keepAttributes *Annotation*
+-keepattributes *Annotation*
 -keepclassmembers class * {
     @org.jetbrains.annotations.NotNull *;
 }

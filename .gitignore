@@ -52,6 +52,8 @@ google-services.json
 
 # Local secrets
 secrets.properties
+keystore.properties
+signing/
 local.properties
 
 # Android Profiling
