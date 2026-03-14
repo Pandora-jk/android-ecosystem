@@ -110,17 +110,18 @@ class ContactDetailActivity : AppCompatActivity() {
         recyclerView.adapter = PlaceholderAdapter("Map view - coming soon")
     }
 
+    class TextViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+
     // Simple adapters for demo
-    inner class InfoAdapter(private val name: String) : RecyclerView.Adapter<InfoAdapter.ViewHolder>() {
-        class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): ViewHolder {
+    inner class InfoAdapter(private val name: String) : RecyclerView.Adapter<TextViewHolder>() {
+        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): TextViewHolder {
             val textView = TextView(parent.context).apply {
                 setPadding(32, 32, 32, 32)
                 textSize = 16f
             }
-            return ViewHolder(textView)
+            return TextViewHolder(textView)
         }
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
             holder.textView.text = "Contact: $name\n\nThis is the info tab.\nTap Photos tab to see cross-app data."
         }
         override fun getItemCount() = 1
@@ -129,19 +130,16 @@ class ContactDetailActivity : AppCompatActivity() {
     inner class PhotosAdapter(
         private val cursor: android.database.Cursor,
         private val contactId: Long
-    ) : RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
-        
-        class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-        
-        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): ViewHolder {
+    ) : RecyclerView.Adapter<TextViewHolder>() {
+        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): TextViewHolder {
             val textView = TextView(parent.context).apply {
                 setPadding(32, 24, 32, 24)
                 textSize = 14f
             }
-            return ViewHolder(textView)
+            return TextViewHolder(textView)
         }
         
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
             if (cursor.moveToPosition(position)) {
                 val photoUri = cursor.getString(0)
                 holder.textView.text = "Photo $position: $photoUri\n(Tap to open in Gallery)"
@@ -157,17 +155,16 @@ class ContactDetailActivity : AppCompatActivity() {
         override fun getItemCount() = cursor.count
     }
 
-    inner class PlaceholderAdapter(private val message: String) : RecyclerView.Adapter<PlaceholderAdapter.ViewHolder>() {
-        class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): ViewHolder {
+    inner class PlaceholderAdapter(private val message: String) : RecyclerView.Adapter<TextViewHolder>() {
+        override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int): TextViewHolder {
             val textView = TextView(parent.context).apply {
                 setPadding(32, 64, 32, 64)
                 textSize = 14f
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
             }
-            return ViewHolder(textView)
+            return TextViewHolder(textView)
         }
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
             holder.textView.text = message
         }
         override fun getItemCount() = 1
