@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         fab = findViewById(R.id.fab)
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = "Contacts"
+        // Material You theme provides the toolbar automatically, no need to set support action bar
+        // supportActionBar?.title = "Contacts"
 
         setupRecyclerView()
         checkPermissionsAndLoad()
